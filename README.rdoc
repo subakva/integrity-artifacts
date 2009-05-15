@@ -1,6 +1,48 @@
 = integrity-artifacts
 
-Description goes here.
+== Example integrity.rake
+
+  namespace :integrity do
+
+    desc "Runs the automated integrity build"
+    task :build do
+
+      require 'configatron'
+      config =  configatron.integrity.artifacts
+
+      config.base_url = 'http://builds.example.com'
+      config.build_name = 'example-app'
+      config.build_id = ''
+
+      config.build_dir = File.expand_path(RAILS_ROOT)
+      config.public_dir = File.expand_path(File.join(config.build_dir, '..', '..', 'public'))
+
+      config.artifacts = ['rcov', 'metric_fu']
+    
+      config.rcov.enabled = true
+      config.rcov.display_name = 'RCov Report'
+      config.rcov.task_name = nil
+      config.rcov.output_dir = File.join(config.build_dir, 'coverage')
+      config.rcov.url_prefix = 'coverage'
+
+      config.metric_fu.enabled = true
+      config.metric_fu.display_name = 'Metric-Fu Report'
+      config.metric_fu.task_name = 'metrics:all'
+      config.metric_fu.output_dir = File.join(config.build_dir, 'tmp', 'metric_fu')
+      config.metric_fu.url_prefix = 'metrics'
+
+      if config.metric_fu.retrieve('enabled', true)
+        require 'metric_fu'
+        MetricFu::Configuration.run do |fu|
+          fu.metrics  = [:churn, :saikuro, :stats, :flog, :flay, :reek, :roodi]
+        end
+      end
+
+      Rake::Task['db:schema:load'].invoke
+      Rake::Task['spec:rcov'].invoke
+    end
+  end
+
 
 == Copyright
 
