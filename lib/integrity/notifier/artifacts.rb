@@ -40,8 +40,9 @@ module Integrity
       #   
       #     if File.exists?(config.retrieve('public_dir', ''))
       #       artifact_output_dir = config.retrieve(name).output_dir
-      #       artifact_archive_dir = File.join(config.public_dir, config.retrieve(name).url_prefix, config.build_name)
-      #       artifact_url = URI.join (config.base_url,   config.retrieve(name).url_prefix, config.build_name)
+      #       url_prefix = config.retrieve(name).url_prefix
+      #       artifact_archive_dir = File.join(config.public_dir, url_prefix,       config.build_name)
+      #       artifact_url =         URI.join (config.base_url,   url_prefix + '/', config.build_name)
       #       artifact_name = config.retrieve(name).retrieve('display_name', name.capitalize)
       #   
       #       log "#{artifact_name}: Moving artifact from #{artifact_output_dir} to #{artifact_archive_dir}"
