@@ -9,7 +9,9 @@ begin
     gem.email = "jason@secondrotation.com"
     gem.homepage = "http://github.com/subakva/integrity-artifacts"
     gem.authors = ["Jason Wadsworth"]
-    # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
+
+    gem.add_dependency "integrity"
+    gem.add_dependency "configatron"
   end
 
 rescue LoadError
