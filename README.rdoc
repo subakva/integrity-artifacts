@@ -1,0 +1,7 @@
+= integrity-artifacts
+
+Description goes here.
+
+== Copyright
+
+Copyright (c) 2009 Jason Wadsworth. See LICENSE for details.
