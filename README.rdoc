@@ -1,6 +1,6 @@
 = integrity-artifacts
 
-1. sudo gem install -s http://gems.github.com subakva-integrity-artifacts
+1. sudo gem install subakva-integrity-artifacts --source=http://gems.github.com
 2. Add require 'integrity/notifier/artifacts' to config.ru
 3. Enable the notifier on the project page
 4. [Optional] Set "Artifact Root" to the file-system path where the artifacts should be saved
