@@ -27,6 +27,32 @@ describe Integrity::Notifier::Artifacts do
     @metric_fu_output_dir = "/home/neverland/integrity/builds/#{@working_dir}/tmp/metric_fu"
   end
 
+  describe '#to_haml' do
+    before(:each) do
+      @haml = Integrity::Notifier::Artifacts.to_haml
+    end
+
+    it "should be renderable" do
+      engine = ::Haml::Engine.new(@haml, {})
+      engine.render(self, {:config=>{}})
+    end
+
+    it "should render form elements" do
+      engine = ::Haml::Engine.new(@haml, {})
+      html = engine.render(self, {:config=>{}})
+      html.strip.should == %{
+<p class='normal'>
+  <label for='artifacts_artifact_root'>Artifact Root</label>
+  <input class='text' id='artifacts_artifact_root' name='notifiers[Artifacts][artifact_root]' type='text' />
+</p>
+<p class='normal'>
+  <label for='artifacts_config_yaml'>Config YAML</label>
+  <input class='text' id='artifacts_config_yaml' name='notifiers[Artifacts][config_yaml]' type='text' />
+</p>
+      }.strip
+    end
+  end
+
   describe 'after a successful build' do
 
     before(:each) do
