@@ -10,15 +10,15 @@ Gem::Specification.new do |s|
   s.email = %q{jason@secondrotation.com}
   s.extra_rdoc_files = [
     "LICENSE",
-     "README.rdoc"
+     "README.markdown"
   ]
   s.files = [
     ".document",
      ".gitignore",
      "LICENSE",
-     "README.rdoc",
+     "README.markdown",
      "Rakefile",
-     "TODO.rdoc",
+     "TODO.markdown",
      "VERSION",
      "config/artifacts.yml",
      "geminstaller.yml",

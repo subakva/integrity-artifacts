@@ -1,4 +1,10 @@
-= integrity-artifacts
+Integrity Artifacts
+=========
+
+You can use integrity-artifacts to copy build artifacts from your integrity builds
+
+Installation
+=========
 
 1. sudo gem install subakva-integrity-artifacts --source=http://gems.github.com
 2. Add require 'integrity/notifier/artifacts' to config.ru
@@ -7,14 +13,8 @@
 5. [Optional] Set "Config YAML" to the location of your artifacts config file relative to your repository root
 6. Click "Update Project"
 
-== Example artifacts.yml
-  ---
-    rcov: 
-      output_dir: coverage
-    metric_fu: 
-      output_dir: tmp/metric_fu
-
-== Example config.ru
+Example config.ru
+=========
 
   #!/usr/bin/env ruby
 
@@ -32,8 +32,17 @@
 
   run Integrity::App
 
+Example artifacts.yml
+=========
 
-== Example integrity.rake
+\  ---
+    rcov: 
+      output_dir: coverage
+    metric_fu: 
+      output_dir: tmp/metric_fu
+
+Example integrity.rake
+=========
 
   namespace :integrity do
     desc "Execute the integrity build..."
