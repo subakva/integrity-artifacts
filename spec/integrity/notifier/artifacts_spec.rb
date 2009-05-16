@@ -119,6 +119,7 @@ describe Integrity::Notifier::Artifacts do
 
         @config_file = "/home/neverland/integrity/builds/#{@working_dir}/config/artifacts.yml"
         File.should_receive(:exists?).with(@config_file).and_return(false)
+        Integrity.stub!(:log)
       end
 
       it "should not try to load the YAML" do
@@ -128,6 +129,11 @@ describe Integrity::Notifier::Artifacts do
 
       it "should move the default rcov output" do
         FileUtils::Verbose.should_receive(:mv).with(@default_output_dir, @archive_dir, :force => true)
+        @notifier.deliver!
+      end
+
+      it "should write a warning to the log" do
+        Integrity.should_receive(:log).with("WARNING: Configured yaml file: #{@config_file} does not exist! Using default configuration.")
         @notifier.deliver!
       end
     end
@@ -143,18 +149,26 @@ describe Integrity::Notifier::Artifacts do
         FileUtils::Verbose.should_receive(:mv).with(@default_output_dir, configured_archive_dir, :force => true)
         @notifier.deliver!
       end
+
     end
 
     describe 'with a missing artifact_root' do
       before(:each) do
         @notifier = Integrity::Notifier::Artifacts.new(commit(:successful), {'artifact_root'=>'/var/www/artifacts'})
         File.should_receive(:exists?).with('/var/www/artifacts').and_return(false)
+        Integrity.stub!(:log)
         init_expected_dirs
+        @configured_archive_dir = "/var/www/artifacts/#{@project.name}/#{@commit.short_identifier}"
       end
 
       it "should use the default artifact_root if the configured one does not exist" do
-        configured_archive_dir = "/var/www/artifacts/#{@project.name}/#{@commit.short_identifier}"
         FileUtils::Verbose.should_receive(:mv).with(@default_output_dir, @archive_dir, :force => true)
+        FileUtils::Verbose.should_not_receive(:mv).with(@default_output_dir, @configured_archive_dir, :force => true)
+        @notifier.deliver!
+      end
+
+      it "should write a warning to the log" do
+        Integrity.should_receive(:log).with("WARNING: Configured artifact_root: /var/www/artifacts does not exist. Using default: /home/neverland/integrity/public/artifacts")
         @notifier.deliver!
       end
     end
