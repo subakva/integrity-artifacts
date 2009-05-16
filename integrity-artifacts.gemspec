@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{integrity-artifacts}
-  s.version = "0.0.0"
+  s.version = "0.1.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Jason Wadsworth"]
@@ -20,7 +20,9 @@ Gem::Specification.new do |s|
      "Rakefile",
      "TODO.rdoc",
      "VERSION",
+     "config/artifacts.yml",
      "geminstaller.yml",
+     "integrity-artifacts.gemspec",
      "lib/integrity/notifier/artifacts.rb",
      "lib/integrity/notifier/config.haml",
      "spec/integrity/notifier/artifacts_spec.rb",
