@@ -1,0 +1,5 @@
+---
+  rcov: 
+    output_dir: coverage
+  metric_fu: 
+    output_dir: tmp/metric_fu

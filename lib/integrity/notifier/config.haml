@@ -1,1 +1,12 @@
-%p.normal There's nothing to configure here.
+%p.normal
+  %label{ :for => "artifacts_artifact_root" } Artifact Root
+  %input.text#artifacts_artifact_root{                    |
+    :name => "notifiers[Artifacts][artifact_root]",       |
+    :type => "text",                                      |
+    :value => config["artifact_root"] }                   |
+%p.normal
+  %label{ :for => "artifacts_config_yaml" } Config YAML
+  %input.text#artifacts_config_yaml{                      |
+    :name => "notifiers[Artifacts][config_yaml]",         |
+    :type => "text",                                      |
+    :value => config["config_yaml"]                       |

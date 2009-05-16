@@ -11,7 +11,6 @@ begin
     gem.authors = ["Jason Wadsworth"]
 
     gem.add_dependency "integrity"
-    gem.add_dependency "configatron"
   end
 
 rescue LoadError
@@ -62,16 +61,11 @@ task :integrity do
   Rake::Task['rcov'].invoke
 
   require 'metric_fu'
-
-  # kibbles n' bits
-  $LOAD_PATH.unshift(File.dirname(__FILE__))
-  $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), 'lib'))
-  require 'integrity/notifier/artifacts'
-
   MetricFu::Configuration.run do |fu|
     fu.metrics -= [:rcov] # running rcov seperately
     fu.metrics -= [:saikuro] # saikuro isn't working for this project...
   end
   Rake::Task['metrics:all'].invoke
+
   puts "Done."
 end

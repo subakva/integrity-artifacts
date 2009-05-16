@@ -1,45 +1,55 @@
 = integrity-artifacts
 
+1. sudo gem install -s http://gems.github.com subakva-integrity-artifacts
+2. Add require 'integrity/notifier/artifacts' to config.ru
+3. Enable the notifier on the project page
+4. [Optional] Set "Artifact Root" to the file-system path where the artifacts should be saved
+5. [Optional] Set "Config YAML" to the location of your artifacts config file relative to your repository root
+6. Click "Update Project"
+
+== Example artifacts.yml
+  ---
+    rcov: 
+      output_dir: coverage
+    metric_fu: 
+      output_dir: tmp/metric_fu
+
+== Example config.ru
+
+  #!/usr/bin/env ruby
+
+  require "rubygems"
+  require "integrity"
+
+  require 'integrity/notifier/artifacts'
+
+  # Load configuration and initialize Integrity
+  Integrity.new(File.dirname(__FILE__) + "/config.yml")
+
+  # You probably don't want to edit anything below
+  Integrity::App.set :environment, ENV["RACK_ENV"] || :production
+  Integrity::App.set :port,        8910
+
+  run Integrity::App
+
+
 == Example integrity.rake
 
   namespace :integrity do
-
-    desc "Runs the automated integrity build"
+    desc "Execute the integrity build..."
     task :build do
+      puts "Executing the integrity build......"
 
-      require 'configatron'
-      config =  configatron.integrity.artifacts
+      Rake::Task['rcov'].invoke
 
-      config.base_url = 'http://builds.example.com'
-      config.build_name = 'example-app'
-      config.build_id = ''
-
-      config.build_dir = File.expand_path(RAILS_ROOT)
-      config.public_dir = File.expand_path(File.join(config.build_dir, '..', '..', 'public'))
-
-      config.artifacts = ['rcov', 'metric_fu']
-    
-      config.rcov.enabled = true
-      config.rcov.display_name = 'RCov Report'
-      config.rcov.task_name = nil
-      config.rcov.output_dir = File.join(config.build_dir, 'coverage')
-      config.rcov.url_prefix = 'coverage'
-
-      config.metric_fu.enabled = true
-      config.metric_fu.display_name = 'Metric-Fu Report'
-      config.metric_fu.task_name = 'metrics:all'
-      config.metric_fu.output_dir = File.join(config.build_dir, 'tmp', 'metric_fu')
-      config.metric_fu.url_prefix = 'metrics'
-
-      if config.metric_fu.retrieve('enabled', true)
-        require 'metric_fu'
-        MetricFu::Configuration.run do |fu|
-          fu.metrics -= [:rcov]
-        end
+      require 'metric_fu'
+      MetricFu::Configuration.run do |fu|
+        fu.metrics -= [:rcov] # running rcov seperately
+        fu.metrics -= [:saikuro] # saikuro isn't working for this project...
       end
+      Rake::Task['metrics:all'].invoke
 
-      Rake::Task['db:schema:load'].invoke
-      Rake::Task['spec:rcov'].invoke
+      puts "Done."
     end
   end
 

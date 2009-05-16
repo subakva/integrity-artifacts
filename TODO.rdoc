@@ -1,15 +1,12 @@
 == Immediate Tasks
-* spec and re-write/refactor code based on the prototype
-* set up integrity build with metrics for this notifier
 * add more explanation to the README
 * update documentation
-* set defaults to get rcov support without any configuration
 
 == Future Tasks
+* add hook for running rake tasks before moving artifacts
+* add ability to move artifacts to a remote machine
 * helpers to check for coverage/metric regression
-* explicit support for other artifact types
 * remove dependency on jeweler
-* move some/all of the config options into the integrity interface
 * configurable logger?
 
 == Questions
