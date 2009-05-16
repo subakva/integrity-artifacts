@@ -2,6 +2,8 @@
 * spec and re-write/refactor code based on the prototype
 * set up integrity build with metrics for this notifier
 * add more explanation to the README
+* update documentation
+* set defaults to get rcov support without any configuration
 
 == Future Tasks
 * helpers to check for coverage/metric regression

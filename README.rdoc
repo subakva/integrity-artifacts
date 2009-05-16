@@ -34,7 +34,7 @@
       if config.metric_fu.retrieve('enabled', true)
         require 'metric_fu'
         MetricFu::Configuration.run do |fu|
-          fu.metrics  = [:churn, :saikuro, :stats, :flog, :flay, :reek, :roodi]
+          fu.metrics -= [:rcov]
         end
       end
 
