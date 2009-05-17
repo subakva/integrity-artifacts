@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{integrity-artifacts}
-  s.version = "0.1.0"
+  s.version = "0.1.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Jason Wadsworth"]
@@ -25,6 +25,7 @@ Gem::Specification.new do |s|
      "integrity-artifacts.gemspec",
      "lib/integrity/notifier/artifacts.rb",
      "lib/integrity/notifier/config.haml",
+     "lib/integrity/notifier/index.haml",
      "spec/integrity/notifier/artifacts_spec.rb",
      "spec/spec_helper.rb"
   ]
