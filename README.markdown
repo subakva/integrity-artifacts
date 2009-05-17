@@ -16,53 +16,54 @@ Installation
 Example config.ru
 =========
 
-  #!/usr/bin/env ruby
+    #!/usr/bin/env ruby
 
-  require "rubygems"
-  require "integrity"
+    require "rubygems"
+    require "integrity"
 
-  require 'integrity/notifier/artifacts'
+    require 'integrity/notifier/artifacts'
 
-  # Load configuration and initialize Integrity
-  Integrity.new(File.dirname(__FILE__) + "/config.yml")
+    # Load configuration and initialize Integrity
+    Integrity.new(File.dirname(__FILE__) + "/config.yml")
 
-  # You probably don't want to edit anything below
-  Integrity::App.set :environment, ENV["RACK_ENV"] || :production
-  Integrity::App.set :port,        8910
+    # You probably don't want to edit anything below
+    Integrity::App.set :environment, ENV["RACK_ENV"] || :production
+    Integrity::App.set :port,        8910
 
-  run Integrity::App
+    run Integrity::App
 
 Example artifacts.yml
 =========
 
-\  ---
-    rcov: 
-      output_dir: coverage
-    metric_fu: 
-      output_dir: tmp/metric_fu
+    ---
+      rcov: 
+        output_dir: coverage
+      metric_fu: 
+        output_dir: tmp/metric_fu
 
 Example integrity.rake
 =========
 
-  namespace :integrity do
-    desc "Execute the integrity build..."
-    task :build do
-      puts "Executing the integrity build......"
+    namespace :integrity do
+      desc "Execute the integrity build..."
+      task :build do
+        puts "Executing the integrity build......"
 
-      Rake::Task['rcov'].invoke
+        Rake::Task['rcov'].invoke
 
-      require 'metric_fu'
-      MetricFu::Configuration.run do |fu|
-        fu.metrics -= [:rcov] # running rcov seperately
-        fu.metrics -= [:saikuro] # saikuro isn't working for this project...
+        require 'metric_fu'
+        MetricFu::Configuration.run do |fu|
+          fu.metrics -= [:rcov] # running rcov seperately
+          fu.metrics -= [:saikuro] # saikuro isn't working for this project...
+        end
+        Rake::Task['metrics:all'].invoke
+
+        puts "Done."
       end
-      Rake::Task['metrics:all'].invoke
-
-      puts "Done."
     end
-  end
 
 
-== Copyright
+Copyright
+==========
 
 Copyright (c) 2009 Jason Wadsworth. See LICENSE for details.
