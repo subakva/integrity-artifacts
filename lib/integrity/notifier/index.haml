@@ -1,0 +1,11 @@
+!!! XML
+!!!
+%html
+  %head
+    %title= "Index of #{dir}"
+  %body
+    %h1= "Index of #{dir}"
+    %ul
+      - hrefs.keys.sort.each do |name|
+        %li
+          %a{:href=>hrefs[name]}= name

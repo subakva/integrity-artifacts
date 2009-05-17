@@ -10,3 +10,10 @@
     :name => "notifiers[Artifacts][config_yaml]",         |
     :type => "text",                                      |
     :value => config["config_yaml"] }                     |
+%p.normal
+  %label{ :for => "artifacts_generate_indexes" }
+    %input.checkbox#artifacts_generate_indexes{             |
+      :name => "notifiers[Artifacts][generate_indexes]",    |
+      :type => "checkbox",                                  |
+      :value => config["generate_indexes"] }                |
+    Generate Indexes?
