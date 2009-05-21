@@ -67,5 +67,9 @@ task :integrity do
   end
   Rake::Task['metrics:all'].invoke
 
+  # create the build.my.gem file to trigger a gem build/publish cycle
+  require 'fileutils'
+  FileUtils::Verbose.touch('build.my.gem')
+
   puts "Done."
 end
